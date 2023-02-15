@@ -13,8 +13,8 @@ const shuffleArray = (list) => {
   }
   return list;
 }
-const createRandomizedGroupedArray = (list) => {
-  const randomizedList = shuffleArray(list)
+const createRandomizedGroupedArray = (list, overrideRandomize) => {
+  const randomizedList = overrideRandomize ? list : shuffleArray(list)
   const rows = []
   for (var i = 0; i < randomizedList.length; i += GROUPING_SIZE) {
     rows.push(randomizedList.slice(i, i + GROUPING_SIZE));
@@ -23,8 +23,9 @@ const createRandomizedGroupedArray = (list) => {
 }
 
 function App() {
+  const overrideRandomize = localStorage.getItem('overrideRandomize') === '1'
   const [focusedImagePath, setFocusedImagePath] = useState()
-  const [groupedImagePaths,] = useState(createRandomizedGroupedArray(images)) // Utilizing state to prevent it from repeatedly shuffling
+  const [groupedImagePaths,] = useState(createRandomizedGroupedArray(images, overrideRandomize)) // Utilizing state to prevent it from repeatedly shuffling
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight
@@ -52,6 +53,10 @@ function App() {
   const clearFocus = () => {
     setFocusedImagePath()
   }
+
+  const toggleOverrideRandomize = () => {
+    localStorage.setItem('overrideRandomize', overrideRandomize ? 0 : 1)
+  }
   
   return (
     <div className="app">
@@ -62,6 +67,10 @@ function App() {
       </div>
       <div onClick={clearFocus} id="focused-image" class={focusedImagePath ? 'active' : 'inactive'}>
         <img src={focusedImagePath} alt="focus" />
+      </div>
+      <div className="footer">
+        <div>All imagery above was created using <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Simple Diffusion</a> to run either the <a href="https://huggingface.co/WarriorMama777/OrangeMixs">AbyssOrangeMix or BloodOrangeMix</a> models. All images can be freely used by anyone, but please do note the <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">Stable Diffusion license / terms of use</a>.</div>
+        <div>To {overrideRandomize ? 'enable' : 'disable'} random ordering of images, <span className="overrideToggle" onClick={toggleOverrideRandomize}>click here</span> then reload the page.</div>
       </div>
     </div>
   );

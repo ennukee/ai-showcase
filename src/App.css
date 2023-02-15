@@ -7,6 +7,8 @@
   width: 100vw;
 
   font-family: 'Lato', sans-serif;
+
+  overflow-x: hidden;
 }
 
 #image-container {
@@ -18,6 +20,16 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+
+.image-row img {
+  border: 1px solid black;
+  transition-duration: 0.5s;
+}
+
+.image-row img:hover {
+  cursor: pointer;
+  filter: brightness(80%);
 }
 
 #focused-image {
@@ -42,4 +54,26 @@
 
 #focused-image img {
   border: 3px solid #eee;
+}
+
+.footer {
+  background-color: #22222b;
+  color: #eeeee2;
+  height: 50px; 
+  padding: 20px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer a, .footer a:visited, .overrideToggle {
+  color: #aaf;
+  text-decoration: none;
+}
+
+.footer a:hover, .overrideToggle:hover {
+  color: #88f;
+  cursor: pointer;
 }
