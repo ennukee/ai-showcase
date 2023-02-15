@@ -1,5 +1,6 @@
 {
   "name": "ai-showcase",
+  "homepage": "https://dbowers.io/ai-showcase",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
