@@ -1,4 +1,6 @@
 .app {
+  display: relative;
+
   background-color: #22222b;
   color: #eeeee2;
   height: 100vh;
@@ -9,10 +11,35 @@
 
 #image-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-#image-container {
-  height: 300px;
+.image-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#focused-image {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: rgba(32, 32, 32, 0.8);
+  top: 0;
+  left: 0;
+}
+
+#focused-image.inactive {
+  display: none;
+}
+
+#focused-image.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#focused-image img {
+  border: 3px solid #eee;
 }
