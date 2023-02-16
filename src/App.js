@@ -24,6 +24,7 @@ const createRandomizedGroupedArray = (list, overrideRandomize) => {
 
 function App() {
   const overrideRandomize = localStorage.getItem('overrideRandomize') === '1'
+  const [displayHeader, setDisplayHeader] = useState(localStorage.getItem('doNotDisplayHeader') !== '1')
   const [focusedImagePath, setFocusedImagePath] = useState()
   const [groupedImagePaths,] = useState(createRandomizedGroupedArray(images, overrideRandomize)) // Utilizing state to prevent it from repeatedly shuffling
   const [windowSize, setWindowSize] = useState({
@@ -57,9 +58,25 @@ function App() {
   const toggleOverrideRandomize = () => {
     localStorage.setItem('overrideRandomize', overrideRandomize ? 0 : 1)
   }
+
+  const turnOffHeader = () => {
+    localStorage.setItem('doNotDisplayHeader', 1)
+    setDisplayHeader(false)
+  }
+
+  const turnOnHeader = () => {
+    localStorage.removeItem('doNotDisplayHeader')
+    setDisplayHeader(true)
+  }
   
   return (
     <div className="app">
+      {displayHeader && <div id="header" className="header">
+        <div className="title">ennukee ai showcase</div>
+        <div className="subtitle">All imagery above was created by me using <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Simple Diffusion</a> to run either the <a href="https://huggingface.co/WarriorMama777/OrangeMixs">AbyssOrangeMix or BloodOrangeMix</a> models. All images can be freely used by anyone, but please do note the <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">Stable Diffusion license / terms of use</a>.</div>
+        <div className="close-header"><span className="link" onClick={turnOffHeader}>Click here to remove this header.</span> You can bring it back via the link in the footer, if need be.</div>
+        <div>To {overrideRandomize ? 'enable' : 'disable'} random ordering of images, <a href="/ai-showcase" onClick={toggleOverrideRandomize}>click here</a>.</div>
+      </div>}
       <div id="image-container">
         {groupedImagePaths.map(group => (
           <ImageRow images={group} windowSize={windowSize} focusCallback={focusImage} />
@@ -68,10 +85,11 @@ function App() {
       <div onClick={clearFocus} id="focused-image" class={focusedImagePath ? 'active' : 'inactive'}>
         <img src={focusedImagePath} alt="focus" />
       </div>
-      <div className="footer">
-        <div>All imagery above was created using <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Simple Diffusion</a> to run either the <a href="https://huggingface.co/WarriorMama777/OrangeMixs">AbyssOrangeMix or BloodOrangeMix</a> models. All images can be freely used by anyone, but please do note the <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">Stable Diffusion license / terms of use</a>.</div>
-        <div>To {overrideRandomize ? 'enable' : 'disable'} random ordering of images, <span className="overrideToggle" onClick={toggleOverrideRandomize}>click here</span> then reload the page.</div>
-      </div>
+      {!displayHeader && <div className="footer">
+        <div>All imagery above was created by me using <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Simple Diffusion</a> to run either the <a href="https://huggingface.co/WarriorMama777/OrangeMixs">AbyssOrangeMix or BloodOrangeMix</a> models. All images can be freely used by anyone, but please do note the <a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">Stable Diffusion license / terms of use</a>.</div>
+        <div>To {overrideRandomize ? 'enable' : 'disable'} random ordering of images, <a href="/ai-showcase" onClick={toggleOverrideRandomize}>click here</a>.</div>
+        <div>To restore the header, <a href="#header" onClick={turnOnHeader}>click here</a>.</div>
+      </div>}
     </div>
   );
 }

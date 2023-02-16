@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .app {
   display: relative;
 
@@ -5,8 +16,6 @@
   color: #eeeee2;
   height: 100vh;
   width: 100vw;
-
-  font-family: 'Lato', sans-serif;
 
   overflow-x: hidden;
 }
@@ -56,10 +65,9 @@
   border: 3px solid #eee;
 }
 
-.footer {
+.footer, .header {
   background-color: #22222b;
   color: #eeeee2;
-  height: 50px; 
   padding: 20px;
   text-align: center;
 
@@ -68,12 +76,27 @@
   gap: 10px;
 }
 
-.footer a, .footer a:visited, .overrideToggle {
+.footer {
+  height: auto;
+}
+
+.header {
+  height: auto;
+  width: 80%;
+  padding: 20px 10%;
+}
+
+a, a:visited, .link {
   color: #aaf;
   text-decoration: none;
 }
 
-.footer a:hover, .overrideToggle:hover {
+a:hover, .link:hover {
   color: #88f;
   cursor: pointer;
+}
+
+.header .title {
+  font-size: 36px;
+  font-weight: 900;
 }
